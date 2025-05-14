@@ -199,8 +199,9 @@ with contact_col3:
 
 contact_button = st.button("Request Information", key="contact_button")
 if contact_button:
+    # Only proceed if all fields are filled out
     if contact_name and contact_district and contact_email:
-        # Store the contact information in session state
+        # Mark submission as complete in session state
         st.session_state.contact_submitted = True
         
         # Send the email to Kris at Maro
