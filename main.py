@@ -9,6 +9,15 @@ from email_sender import send_contact_email
 import base64
 from datetime import datetime
 
+if "contact_name" not in st.session_state:
+    st.session_state.contact_name = ""
+if "contact_district" not in st.session_state:
+    st.session_state.contact_district = ""
+if "contact_email" not in st.session_state:
+    st.session_state.contact_email = ""
+if "contact_submitted" not in st.session_state:
+    st.session_state.contact_submitted = False
+
 # Page configuration
 st.set_page_config(
     page_title="Proactive Mental Health Cost Savings Calculator for K-12 Schools",
@@ -171,15 +180,6 @@ if calculate_button:
         href = f'<a href="data:text/html;base64,{b64}" download="savings_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.html">Download Report</a>'
         st.markdown(href, unsafe_allow_html=True)
     
-
-if "contact_name" not in st.session_state:
-    st.session_state.contact_name = ""
-if "contact_district" not in st.session_state:
-    st.session_state.contact_district = ""
-if "contact_email" not in st.session_state:
-    st.session_state.contact_email = ""
-if "contact_submitted" not in st.session_state:
-    st.session_state.contact_submitted = False
 
 # Contact Form Section
 st.markdown("---")
