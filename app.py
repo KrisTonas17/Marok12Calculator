@@ -192,8 +192,8 @@ with contact_col3:
 contact_button = st.button("Request Information", key="contact_button")
 if contact_button:
     if contact_name and contact_district and contact_email:
-    st.session_state["contact_submitted"] = True
-    email_sent = send_contact_email(contact_name, contact_district, contact_email)
+        st.session_state["contact_submitted"] = True
+        email_sent = send_contact_email(contact_name, contact_district, contact_email)
         
         if email_sent:
             st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
