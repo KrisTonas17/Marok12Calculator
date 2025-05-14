@@ -9,15 +9,6 @@ from email_sender import send_contact_email
 import base64
 from datetime import datetime
 
-if "contact_name" not in st.session_state:
-    st.session_state.contact_name = ""
-if "contact_district" not in st.session_state:
-    st.session_state.contact_district = ""
-if "contact_email" not in st.session_state:
-    st.session_state.contact_email = ""
-if "contact_submitted" not in st.session_state:
-    st.session_state.contact_submitted = False
-
 # Page configuration
 st.set_page_config(
     page_title="Proactive Mental Health Cost Savings Calculator for K-12 Schools",
@@ -180,7 +171,6 @@ if calculate_button:
         href = f'<a href="data:text/html;base64,{b64}" download="savings_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.html">Download Report</a>'
         st.markdown(href, unsafe_allow_html=True)
     
-
 # Contact Form Section
 st.markdown("---")
 st.subheader("Contact Us")
@@ -191,30 +181,20 @@ Kris from the Maro team will reach out to schedule a time to discuss affordable 
 
 contact_col1, contact_col2, contact_col3 = st.columns(3)
 with contact_col1:
-    contact_name = st.text_input("Your Name", key="contact_name_input")  # Changed the key here
+    name_input = st.text_input("Your Name", key="contact_name_input")
 with contact_col2:
-    contact_district = st.text_input("School District", key="contact_district_input")  # Changed the key here
+    district_input = st.text_input("School District", key="contact_district_input")
 with contact_col3:
-    contact_email = st.text_input("Email Address", key="contact_email_input")  # Changed the key here
+    email_input = st.text_input("Email Address", key="contact_email_input")
 
 contact_button = st.button("Request Information", key="contact_button")
 
-# When form is submitted
 if contact_button:
-    # Check that all fields are filled out
-    if contact_name and contact_district and contact_email:
-        # Update session state
-        st.session_state.contact_name = contact_name
-        st.session_state.contact_district = contact_district
-        st.session_state.contact_email = contact_email
-        st.session_state.contact_submitted = True
+    if name_input and district_input and email_input:
+        email_sent = send_contact_email(name_input, district_input, email_input)
         
-        # Attempt to send the email
-        email_sent = send_contact_email(contact_name, contact_district, contact_email)
-        
-        # Handle success/failure of email
         if email_sent:
-            st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
+            st.success(f"Thank you {name_input}! Kris from Maro will reach out to you soon!")
         else:
             st.warning("There was an issue sending your information. Please try again later or contact Maro directly.")
     else:
