@@ -202,9 +202,6 @@ if contact_button:
     if contact_name and contact_district and contact_email:
         # Store the contact information in session state
         st.session_state.contact_submitted = True
-        st.session_state.contact_name = contact_name
-        st.session_state.contact_district = contact_district 
-        st.session_state.contact_email = contact_email
         
         # Send the email to Kris at Maro
         email_sent = send_contact_email(contact_name, contact_district, contact_email)
