@@ -172,6 +172,14 @@ if calculate_button:
         st.markdown(href, unsafe_allow_html=True)
     
 
+if "contact_name" not in st.session_state:
+    st.session_state.contact_name = ""
+if "contact_district" not in st.session_state:
+    st.session_state.contact_district = ""
+if "contact_email" not in st.session_state:
+    st.session_state.contact_email = ""
+if "contact_submitted" not in st.session_state:
+    st.session_state.contact_submitted = False
 
 # Contact Form Section
 st.markdown("---")
