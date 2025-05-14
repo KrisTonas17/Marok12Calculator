@@ -198,15 +198,21 @@ with contact_col3:
     contact_email = st.text_input("Email Address", key="contact_email")
 
 contact_button = st.button("Request Information", key="contact_button")
+
+# When form is submitted
 if contact_button:
-    # Only proceed if all fields are filled out
+    # Check that all fields are filled out
     if contact_name and contact_district and contact_email:
-        # Mark submission as complete in session state
+        # Update session state
+        st.session_state.contact_name = contact_name
+        st.session_state.contact_district = contact_district
+        st.session_state.contact_email = contact_email
         st.session_state.contact_submitted = True
         
-        # Send the email to Kris at Maro
+        # Attempt to send the email
         email_sent = send_contact_email(contact_name, contact_district, contact_email)
         
+        # Handle success/failure of email
         if email_sent:
             st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
         else:
