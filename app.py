@@ -172,35 +172,34 @@ if calculate_button:
         st.markdown(href, unsafe_allow_html=True)
     
 
-
 # Contact Form Section
-# st.markdown("---")
-# st.subheader("Contact Us")
-# st.markdown("""
-# If your district is looking to take a more proactive approach to mental health, please fill out the contact form below. 
-# Kris from the Maro team will reach out to schedule a time to discuss affordable resources tailored to your district's needs.
-# """)
+st.markdown("---")
+st.subheader("Contact Us")
+st.markdown("""
+If your district is looking to take a more proactive approach to mental health, please fill out the contact form below. 
+Kris from the Maro team will reach out to schedule a time to discuss affordable resources tailored to your district's needs.
+""")
 
-# contact_col1, contact_col2, contact_col3 = st.columns(3)
-# with contact_col1:
-#     contact_name = st.text_input("Your Name", key="contact_name")
-# with contact_col2:
-#     contact_district = st.text_input("School District", key="contact_district")
-# with contact_col3:
-#     contact_email = st.text_input("Email Address", key="contact_email")
+contact_col1, contact_col2, contact_col3 = st.columns(3)
+with contact_col1:
+    contact_name = st.text_input("Your Name", key="contact_name")
+with contact_col2:
+    contact_district = st.text_input("School District", key="contact_district")
+with contact_col3:
+    contact_email = st.text_input("Email Address", key="contact_email")
 
-# contact_button = st.button("Request Information", key="contact_button")
-# if contact_button:
-#     if contact_name and contact_district and contact_email:
-#         st.session_state["contact_submitted"] = True
-#         email_sent = send_contact_email(contact_name, contact_district, contact_email)
+contact_button = st.button("Request Information", key="contact_button")
+if contact_button:
+    if contact_name and contact_district and contact_email:
+        st.session_state["contact_submitted"] = True
+        email_sent = send_contact_email(contact_name, contact_district, contact_email)
         
-#         if email_sent:
-#             st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
-#         else:
-#             st.warning("There was an issue sending your information. Please try again later or contact Maro directly.")
-#     else:
-#         st.warning("Please fill out all fields to submit your request.")
+        if email_sent:
+            st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
+        else:
+            st.warning("There was an issue sending your information. Please try again later or contact Maro directly.")
+    else:
+        st.warning("Please fill out all fields to submit your request.")
 
 # Information section
 st.header("About the Calculator")
