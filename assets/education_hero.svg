@@ -1,0 +1,46 @@
+<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="300" fill="#F0F7FF"/>
+  
+  <!-- Header Banner -->
+  <rect x="0" y="0" width="800" height="80" fill="#1565C0"/>
+  <text x="400" y="45" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Educational Cost Savings Calculator</text>
+  
+  <!-- School Building -->
+  <rect x="100" y="120" width="200" height="140" fill="#FFFFFF" stroke="#333333" stroke-width="2"/>
+  <rect x="150" y="90" width="100" height="30" fill="#FF7043"/>
+  <path d="M140 90 L200 50 L260 90 Z" fill="#FF7043"/>
+  
+  <!-- Windows -->
+  <rect x="130" y="140" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  <rect x="185" y="140" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  <rect x="240" y="140" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  <rect x="130" y="190" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  <rect x="185" y="190" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  <rect x="240" y="190" width="30" height="30" fill="#90CAF9" stroke="#333333" stroke-width="1"/>
+  
+  <!-- Door -->
+  <rect x="185" y="220" width="30" height="40" fill="#8D6E63" stroke="#333333" stroke-width="1"/>
+  <circle cx="195" cy="240" r="2" fill="#FFEB3B"/>
+  
+  <!-- Graph/Chart -->
+  <rect x="500" y="120" width="200" height="140" fill="#FFFFFF" stroke="#333333" stroke-width="2"/>
+  
+  <!-- Bar Chart -->
+  <rect x="520" y="220" width="30" height="30" fill="#1565C0"/>
+  <rect x="560" y="190" width="30" height="60" fill="#1565C0"/>
+  <rect x="600" y="140" width="30" height="110" fill="#1565C0"/>
+  <rect x="640" y="170" width="30" height="80" fill="#1565C0"/>
+  
+  <!-- Chart Grid -->
+  <line x1="500" y1="140" x2="700" y2="140" stroke="#CCCCCC" stroke-width="1"/>
+  <line x1="500" y1="170" x2="700" y2="170" stroke="#CCCCCC" stroke-width="1"/>
+  <line x1="500" y1="200" x2="700" y2="200" stroke="#CCCCCC" stroke-width="1"/>
+  <line x1="500" y1="230" x2="700" y2="230" stroke="#CCCCCC" stroke-width="1"/>
+  
+  <!-- Dollar Sign -->
+  <text x="450" y="180" font-family="Arial" font-size="80" fill="#4CAF50" font-weight="bold">$</text>
+  
+  <!-- Connecting Line -->
+  <path d="M310 190 C360 190, 360 180, 420 180" stroke="#333333" stroke-width="2" fill="none"/>
+</svg>
