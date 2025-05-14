@@ -191,11 +191,11 @@ Kris from the Maro team will reach out to schedule a time to discuss affordable 
 
 contact_col1, contact_col2, contact_col3 = st.columns(3)
 with contact_col1:
-    contact_name = st.text_input("Your Name", key="contact_name")
+    contact_name = st.text_input("Your Name", key="contact_name_input")  # Changed the key here
 with contact_col2:
-    contact_district = st.text_input("School District", key="contact_district")
+    contact_district = st.text_input("School District", key="contact_district_input")  # Changed the key here
 with contact_col3:
-    contact_email = st.text_input("Email Address", key="contact_email")
+    contact_email = st.text_input("Email Address", key="contact_email_input")  # Changed the key here
 
 contact_button = st.button("Request Information", key="contact_button")
 
