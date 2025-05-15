@@ -164,19 +164,21 @@ if calculate_button:
     
     # Generate report button
     # Generate report button
-report_button = st.button("Generate Downloadable Report", key="report_button")
-
-if report_button:
+# Check if results exist in session state (i.e. after "Calculate Potential Savings" is clicked)
+if "results" in st.session_state:
+    st.subheader("Generate Your Report")
+    
+    # Generate the report HTML
     try:
-        # Attempt to generate the report
         report_html = generate_report(st.session_state.results)
 
-        # Show the download button using Streamlit's native method
+        # Show download button for report
         st.download_button(
             label="📄 Download Report",
             data=report_html,
             file_name=f"savings_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html",
             mime="text/html",
+            key="download_report_button"
         )
     except Exception as e:
         st.error(f"❌ An error occurred while generating the report: {e}")
