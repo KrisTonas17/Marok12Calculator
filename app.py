@@ -138,6 +138,8 @@ if calculate_button:
         "absenteeism_cost": absenteeism_cost,
         "crisis_cost": crisis_cost
     }
+
+    st.session_state["report_ready"] = True
     
     # Display results
     st.subheader("Savings Summary")
