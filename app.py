@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 from utils import calculate_savings
 from visualizations import create_savings_chart, create_comparison_chart
 from report_generator import generate_report
-from email_sender import send_contact_email
 import base64
 from datetime import datetime
 
@@ -180,26 +179,39 @@ If your district is looking to take a more proactive approach to mental health, 
 Kris from the Maro team will reach out to schedule a time to discuss affordable resources tailored to your district's needs.
 """)
 
-contact_col1, contact_col2, contact_col3 = st.columns(3)
-with contact_col1:
-    contact_name = st.text_input("Your Name", key="contact_name")
-with contact_col2:
-    contact_district = st.text_input("School District", key="contact_district")
-with contact_col3:
-    contact_email = st.text_input("Email Address", key="contact_email")
+st.markdown("""
+<div id="contact-form-wrapper">
+    <form id="contact-form" action="https://getform.io/f/bpjndonb" method="POST" target="hidden_iframe" onsubmit="showThankYou();">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <input type="text" name="name" placeholder="Your Name" required 
+                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" name="district" placeholder="School District" required 
+                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="email" name="email" placeholder="Email Address" required 
+                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+        </div>
+        <br>
+        <button type="submit" 
+                style="padding: 10px 24px; background-color: #1565C0; color: white; border: none; border-radius: 6px; font-size: 16px;">
+            Request Information
+        </button>
+    </form>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <p id="thank-you-message" style="display:none; color: green; font-weight: bold; margin-top: 10px;">
+        ✅ Thank you! Kris from Maro will reach out to you soon.
+    </p>
+</div>
 
-contact_button = st.button("Request Information", key="contact_button")
-if contact_button:
-    if contact_name and contact_district and contact_email:
-        st.session_state["contact_submitted"] = True
-        email_sent = send_contact_email(contact_name, contact_district, contact_email)
-        
-        if email_sent:
-            st.success(f"Thank you {contact_name}! Kris from Maro will reach out to you soon!")
-        else:
-            st.warning("There was an issue sending your information. Please try again later or contact Maro directly.")
-    else:
-        st.warning("Please fill out all fields to submit your request.")
+<script>
+function showThankYou() {
+    setTimeout(function() {
+        document.getElementById("contact-form").style.display = "none";
+        document.getElementById("thank-you-message").style.display = "block";
+    }, 500);
+}
+</script>
+""", unsafe_allow_html=True)
+
 
 # Information section
 st.header("About the Calculator")
