@@ -163,12 +163,24 @@ if calculate_button:
     st.plotly_chart(compare_fig, use_container_width=True)
     
     # Generate report button
-    report_button = st.button("Generate Downloadable Report", key="report_button")
-    if report_button:
+    # Generate report button
+report_button = st.button("Generate Downloadable Report", key="report_button")
+
+if report_button:
+    try:
+        # Attempt to generate the report
         report_html = generate_report(st.session_state.results)
-        b64 = base64.b64encode(report_html.encode()).decode()
-        href = f'<a href="data:text/html;base64,{b64}" download="savings_report_{datetime.now().strftime("%Y%m%d_%H%M%S")}.html">Download Report</a>'
-        st.markdown(href, unsafe_allow_html=True)
+
+        # Show the download button using Streamlit's native method
+        st.download_button(
+            label="📄 Download Report",
+            data=report_html,
+            file_name=f"savings_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html",
+            mime="text/html",
+        )
+    except Exception as e:
+        st.error(f"❌ An error occurred while generating the report: {e}")
+
     
 
 # Contact Form Section
