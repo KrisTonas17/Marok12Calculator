@@ -163,16 +163,12 @@ if calculate_button:
     st.plotly_chart(compare_fig, use_container_width=True)
     
     # Generate report button
-    # Generate report button
-# Check if results exist in session state (i.e. after "Calculate Potential Savings" is clicked)
-if "results" in st.session_state:
+if st.session_state.get("report_ready"):
     st.subheader("Generate Your Report")
-    
-    # Generate the report HTML
+
     try:
         report_html = generate_report(st.session_state.results)
 
-        # Show download button for report
         st.download_button(
             label="📄 Download Report",
             data=report_html,
@@ -182,6 +178,7 @@ if "results" in st.session_state:
         )
     except Exception as e:
         st.error(f"❌ An error occurred while generating the report: {e}")
+
 
     
 
