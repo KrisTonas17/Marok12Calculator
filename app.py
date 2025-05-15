@@ -172,6 +172,7 @@ if calculate_button:
     
 
 # Contact Form Section
+# Contact Form Section
 st.markdown("---")
 st.subheader("Contact Us")
 st.markdown("""
@@ -179,38 +180,30 @@ If your district is looking to take a more proactive approach to mental health, 
 Kris from the Maro team will reach out to schedule a time to discuss affordable resources tailored to your district's needs.
 """)
 
-st.markdown("""
-<div id="contact-form-wrapper">
-    <form id="contact-form" action="https://getform.io/f/bpjndonb" method="POST" target="hidden_iframe" onsubmit="showThankYou();">
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-            <input type="text" name="name" placeholder="Your Name" required 
-                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" name="district" placeholder="School District" required 
-                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="email" name="email" placeholder="Email Address" required 
-                   style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-        </div>
-        <br>
-        <button type="submit" 
-                style="padding: 10px 24px; background-color: #1565C0; color: white; border: none; border-radius: 6px; font-size: 16px;">
-            Request Information
-        </button>
-    </form>
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    <p id="thank-you-message" style="display:none; color: green; font-weight: bold; margin-top: 10px;">
-        ✅ Thank you! Kris from Maro will reach out to you soon.
-    </p>
-</div>
+with st.form("contact_form"):
+    name = st.text_input("Your Name")
+    district = st.text_input("School District")
+    email = st.text_input("Email Address")
+    submitted = st.form_submit_button("Request Information")
 
-<script>
-function showThankYou() {
-    setTimeout(function() {
-        document.getElementById("contact-form").style.display = "none";
-        document.getElementById("thank-you-message").style.display = "block";
-    }, 500);
-}
-</script>
-""", unsafe_allow_html=True)
+    if submitted:
+        import requests
+
+        data = {
+            "name": name,
+            "district": district,
+            "email": email,
+        }
+
+        try:
+            response = requests.post("https://getform.io/f/bpjndonb", data=data)
+            if response.status_code == 200:
+                st.success("✅ Thank you! Kris from Maro will reach out to you soon.")
+            else:
+                st.error("❌ Something went wrong. Please try again later.")
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
+
 
 
 # Information section
