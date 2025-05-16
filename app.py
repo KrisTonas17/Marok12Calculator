@@ -164,18 +164,12 @@ if calculate_button:
     )
     st.plotly_chart(compare_fig, use_container_width=True)
     
-    # Calculate team time savings
-    teacher_time_saved = (
-        num_students * discipline_drop * 0.25 +
-        num_students * crisis_drop * 0.33 +
-        num_students * absenteeism_drop * 0.25
-    )
+    from utils import calculate_time_saved  # Make sure this is at the top of the file
 
-    counselor_time_saved = (
-        num_students * discipline_drop * 0.33 +
-        num_students * crisis_drop * 0.5 +
-        num_students * absenteeism_drop * 0.33
-    )
+    # Calculate team time savings (per educator/counselor)
+    time_saved = calculate_time_saved(num_students, discipline_drop, crisis_drop)
+    teacher_time_saved = time_saved["teacher"]
+    counselor_time_saved = time_saved["counselor"]
 
 # Display team time savings section
     st.markdown("### 👥 Team Time Savings")
