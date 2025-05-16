@@ -176,6 +176,10 @@ if calculate_button:
     st.markdown("""
     Beyond financial savings, implementing proactive mental health strategies can lead to meaningful **time savings** for your staff.
     """)
+    st.markdown("""
+    These estimates are based on national research on educator time spent managing discipline, crises, and referrals, adjusted by the improvements you selected above.
+    """)
+
     st.markdown(f"""
     - **Teachers** may save an estimated **{teacher_time_saved:.1f} hours per week** by reducing time spent on classroom disruptions, crisis management, and referrals.
     - **Counselors** may save an estimated **{counselor_time_saved:.1f} hours per week** by decreasing time spent on disciplinary actions, crisis interventions, and processing referrals.
