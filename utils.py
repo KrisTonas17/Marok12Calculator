@@ -2,14 +2,14 @@ import pandas as pd
 
 def calculate_time_saved(num_students, discipline_drop, crisis_drop, referral_drop=0.25):
     """
-    Estimate annual time saved for educators and counselors.
+    Estimate weekly time saved for educators and counselors.
     """
-    teacher_discipline_hours = 3.5 * 36
-    counselor_discipline_hours = 2.5 * 36
-    teacher_crisis_hours = 1.5 * 36
-    counselor_crisis_hours = 6 * 36
-    teacher_referral_hours = 2 * 9
-    counselor_referral_hours = 4 * 9
+    teacher_discipline_hours = 3.5
+    counselor_discipline_hours = 2.5
+    teacher_crisis_hours = 1.5
+    counselor_crisis_hours = 6
+    teacher_referral_hours = 0.5  # 30 minutes per referral
+    counselor_referral_hours = 1.5  # Average of 1–2 hours per referral
 
     time_saved = {
         "teacher": round(
