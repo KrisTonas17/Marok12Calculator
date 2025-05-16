@@ -1,5 +1,3 @@
-# Let's prepare the complete updated generate_report() function with the time savings section included.
-updated_generate_report_code = """
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -8,7 +6,7 @@ from utils import format_currency, create_summary_dataframe
 from visualizations import create_savings_chart, create_roi_chart
 
 def generate_report(results):
-    \"\"\"
+    """
     Generate an HTML report based on the calculation results.
     
     Parameters:
@@ -20,7 +18,7 @@ def generate_report(results):
     --------
     str
         HTML content for the report
-    \"\"\"
+    """
     # Create summary dataframe
     summary_df = create_summary_dataframe(results)
 
@@ -51,7 +49,7 @@ def generate_report(results):
     )
 
     # Format the HTML content
-    html_content = f\"\"\"
+    html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -244,9 +242,5 @@ def generate_report(results):
         </div>
     </body>
     </html>
-    \"\"\"
+    """
     return html_content
-"""
-
-updated_generate_report_code
-
