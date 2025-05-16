@@ -214,5 +214,34 @@ def create_roi_chart(results):
         ),
         yaxis=dict(tickprefix="$", tickformat=",.0f")
     )
+
+    import plotly.graph_objects as go
+
+def create_time_savings_charts(teacher_weekly, counselor_weekly):
+    teacher_annual = teacher_weekly * 36
+    counselor_annual = counselor_weekly * 36
+
+    weekly_fig = go.Figure(data=[
+        go.Bar(name='Teachers', x=['Weekly Time Saved'], y=[teacher_weekly]),
+        go.Bar(name='Counselors', x=['Weekly Time Saved'], y=[counselor_weekly])
+    ])
+    weekly_fig.update_layout(
+        title='Weekly Time Savings',
+        yaxis_title='Hours',
+        barmode='group'
+    )
+
+    annual_fig = go.Figure(data=[
+        go.Bar(name='Teachers', x=['Annual Time Saved'], y=[teacher_annual]),
+        go.Bar(name='Counselors', x=['Annual Time Saved'], y=[counselor_annual])
+    ])
+    annual_fig.update_layout(
+        title='Annual Time Savings',
+        yaxis_title='Hours',
+        barmode='group'
+    )
+
+    return weekly_fig, annual_fig
+
     
     return fig
