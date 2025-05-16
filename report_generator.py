@@ -1,5 +1,5 @@
 # Let's prepare the complete updated generate_report() function with the time savings section included.
-updated_generate_report_code = """
+updated_generate_report_code = 
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -246,7 +246,6 @@ def generate_report(results):
     </html>
     \"\"\"
     return html_content
-"""
 
 updated_generate_report_code
 
