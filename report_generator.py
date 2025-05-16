@@ -226,10 +226,10 @@ def generate_report(results):
                 Beyond financial benefits, implementing proactive mental health strategies can lead to significant <strong>time savings</strong> for educators and counselors.
             </p>
             <p>
-                <strong>Teachers:</strong> Estimated annual time savings of <strong>{teacher_time_saved:.1f} hours</strong> by reducing time spent on classroom disruptions, crisis management, and referrals.
+                <strong>Teachers:</strong> Estimated weekly time savings of <strong>{teacher_time_saved:.1f} hours</strong> by reducing time spent on classroom disruptions, crisis management, and referrals.
             </p>
             <p>
-                <strong>Counselors:</strong> Estimated annual time savings of <strong>{counselor_time_saved:.1f} hours</strong> by decreasing involvement in disciplinary actions, crisis interventions, and processing referrals.
+                <strong>Counselors:</strong> Estimated weekly time savings of <strong>{counselor_time_saved:.1f} hours</strong> by decreasing involvement in disciplinary actions, crisis interventions, and processing referrals.
             </p>
             <p>
                 These reclaimed hours can be redirected towards proactive student support, planning, and fostering a positive educational environment.
