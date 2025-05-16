@@ -8,12 +8,12 @@ from visualizations import create_savings_chart, create_roi_chart
 def generate_report(results):
     """
     Generate an HTML report based on the calculation results.
-    
+
     Parameters:
     -----------
     results : dict
         Dictionary containing calculation results
-    
+
     Returns:
     --------
     str
@@ -21,25 +21,44 @@ def generate_report(results):
     """
     # Create summary dataframe
     summary_df = create_summary_dataframe(results)
-    
+
+    # Calculate time savings
+    num_students = results["num_students"]
+    discipline_drop = results["discipline_drop"]
+    absenteeism_drop = results["absenteeism_drop"]
+    crisis_drop = results["crisis_drop"]
+
+    # Estimating time saved (in hours)
+    teacher_time_saved = (
+        num_students * discipline_drop * 0.25 +    # 15 minutes
+        num_students * crisis_drop * 0.33 +        # 20 minutes
+        num_students * absenteeism_drop * 0.25     # 15 minutes
+    )
+
+    counselor_time_saved = (
+        num_students * discipline_drop * 0.33 +    # 20 minutes
+        num_students * crisis_drop * 0.5 +         # 30 minutes
+        num_students * absenteeism_drop * 0.33     # 20 minutes
+    )
+
     # Create charts
     savings_chart = create_savings_chart(
         results["discipline_savings"],
         results["absenteeism_savings"],
         results["crisis_savings"]
     )
-    
+
     roi_chart = create_roi_chart(results)
-    
+
     # Format the HTML content
     html_content = f"""
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang=\"en\">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset=\"UTF-8\">
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
         <title>Proactive Mental Health Cost Savings Report - {results["institution_name"]}</title>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src=\"https://cdn.plot.ly/plotly-latest.min.js\"></script>
         <style>
             body {{
                 font-family: Arial, sans-serif;
@@ -114,23 +133,23 @@ def generate_report(results):
         </style>
     </head>
     <body>
-        <div class="header">
-            <div class="logo">
+        <div class=\"header\">
+            <div class=\"logo\">
                 <h1>Proactive Mental Health Cost Savings Report</h1>
                 <p>Data-driven insights for implementing mental health resources in schools</p>
             </div>
             <h2>{results["institution_name"]}</h2>
             <p>Report generated on {results["timestamp"]}</p>
         </div>
-        
-        <div class="summary-box">
+
+        <div class=\"summary-box\">
             <h3>Executive Summary</h3>
             <p>Based on a student population of <strong>{results["num_students"]:,}</strong>, 
             our analysis indicates a potential total annual savings of 
             <strong>{format_currency(results["total_savings"])}</strong> through strategic improvements 
             in three key areas.</p>
         </div>
-        
+
         <h3>Savings Breakdown</h3>
         <table>
             <thead>
@@ -168,7 +187,7 @@ def generate_report(results):
                     <td>{format_currency(results["crisis_savings"])}</td>
                     <td>{results["crisis_savings"]/results["total_savings"]*100:.1f}%</td>
                 </tr>
-                <tr class="total-row">
+                <tr class=\"total-row\">
                     <td>Total</td>
                     <td></td>
                     <td></td>
@@ -178,16 +197,16 @@ def generate_report(results):
                 </tr>
             </tbody>
         </table>
-        
-        <div class="chart-container" id="savings-chart">
+
+        <div class=\"chart-container\" id=\"savings-chart\">
             {savings_chart.to_html(full_html=False, include_plotlyjs=False)}
         </div>
-        
-        <div class="chart-container" id="roi-chart">
+
+        <div class=\"chart-container\" id=\"roi-chart\">
             {roi_chart.to_html(full_html=False, include_plotlyjs=False)}
         </div>
-        
-        <div class="methodology">
+
+        <div class=\"methodology\">
             <h3>Calculation Methodology</h3>
             <p>The savings calculations are based on the following formulas:</p>
             <ul>
@@ -197,7 +216,7 @@ def generate_report(results):
             </ul>
             <p>Default values for expected improvements are based on national averages of schools implementing proactive mental health resources, but have been customized to your specific context.</p>
         </div>
-        
+
         <h3>Recommendations</h3>
         <p>Based on the analysis, we recommend focusing on the following areas to achieve the estimated savings:</p>
         <ol>
@@ -205,19 +224,34 @@ def generate_report(results):
             <li><strong>Chronic Absenteeism</strong>: Develop early warning systems, implement mental health support, and create personalized attendance intervention plans.</li>
             <li><strong>Crisis Management</strong>: Invest in preventative mental health services, staff training, and accessible resources for students in need.</li>
         </ol>
-        
-        <div class="additional-resources">
+
+        <div class=\"additional-resources\">
             <h3>Additional Resources</h3>
-            <p>Tools like Maro (<a href="https://meetmaro.com" target="_blank">meetmaro.com</a>) can support your efforts by making mental health screening, care navigation, access to community resources, and lesson planning easier and more accessible in one platform.</p>
+            <p>Tools like Maro (<a href=\"https://meetmaro.com\" target=\"_blank\">meetmaro.com</a>) can support your efforts by making mental health screening, care navigation, access to community resources, and lesson planning easier and more accessible in one platform.</p>
         </div>
-        
-        <div class="footer">
+
+        <h3>Team Time Savings</h3>
+        <div class=\"summary-box\">
+            <p>
+                Beyond financial benefits, implementing proactive mental health strategies can lead to significant <strong>time savings</strong> for educators and counselors.
+            </p>
+            <p>
+                <strong>Teachers:</strong> Estimated annual time savings of <strong>{teacher_time_saved:.1f} hours</strong> by reducing time spent on classroom disruptions, crisis management, and referrals.
+            </p>
+            <p>
+                <strong>Counselors:</strong> Estimated annual time savings of <strong>{counselor_time_saved:.1f} hours</strong> by decreasing involvement in disciplinary actions, crisis interventions, and processing referrals.
+            </p>
+            <p>
+                These reclaimed hours can be redirected towards proactive student support, planning, and fostering a positive educational environment.
+            </p>
+        </div>
+
+        <div class=\"footer\">
             <p>This report was generated by the Proactive Mental Health Cost Savings Calculator.</p>
             <p>The calculations provided are estimates based on the input parameters and should be used as one of many decision-making tools.</p>
         </div>
     </body>
     </html>
     """
-    
-    return html_content
 
+    return html_content
