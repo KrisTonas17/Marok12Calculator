@@ -1,14 +1,12 @@
-# Let's prepare the complete updated generate_report() function with the time savings section included.
-updated_generate_report_code = 
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
 from utils import format_currency, create_summary_dataframe
-from visualizations import create_savings_chart, create_roi_chart
+from visualizations import create_savings_chart, create_roi_chart, create_time_savings_charts
 
 def generate_report(results):
-    \"\"\"
+    """
     Generate an HTML report based on the calculation results.
     
     Parameters:
@@ -20,11 +18,10 @@ def generate_report(results):
     --------
     str
         HTML content for the report
-    \"\"\"
-    # Create summary dataframe
+    """
     summary_df = create_summary_dataframe(results)
 
-    # Create charts
+    # Create main savings charts
     savings_chart = create_savings_chart(
         results["discipline_savings"],
         results["absenteeism_savings"],
@@ -38,20 +35,30 @@ def generate_report(results):
     absenteeism_drop = results["absenteeism_drop"]
     crisis_drop = results["crisis_drop"]
 
-    teacher_time_saved = (
+    teacher_time_saved_weekly = (
         num_students * discipline_drop * 0.25 +
         num_students * crisis_drop * 0.33 +
         num_students * absenteeism_drop * 0.25
     )
 
-    counselor_time_saved = (
+    counselor_time_saved_weekly = (
         num_students * discipline_drop * 0.33 +
         num_students * crisis_drop * 0.5 +
         num_students * absenteeism_drop * 0.33
     )
 
-    # Format the HTML content
-    html_content = f\"\"\"
+    teacher_time_saved_annual = teacher_time_saved_weekly * 36
+    counselor_time_saved_annual = counselor_time_saved_weekly * 36
+
+    weekly_fig, annual_fig = create_time_savings_charts(
+        teacher_time_saved_weekly, counselor_time_saved_weekly
+    )
+
+    weekly_chart_html = weekly_fig.to_html(full_html=False, include_plotlyjs=False)
+    annual_chart_html = annual_fig.to_html(full_html=False, include_plotlyjs=False)
+
+    # Build the full report HTML
+    html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -109,8 +116,8 @@ def generate_report(results):
             }}
             .chart-container {{
                 width: 100%;
-                height: 400px;
-                margin-bottom: 30px;
+                height: 350px;
+                margin-bottom: 40px;
             }}
             .footer {{
                 margin-top: 30px;
@@ -224,18 +231,15 @@ def generate_report(results):
 
         <h3>Team Time Savings</h3>
         <div class="summary-box">
-            <p>
-                Beyond financial benefits, implementing proactive mental health strategies can lead to significant <strong>time savings</strong> for educators and counselors.
-            </p>
-            <p>
-                <strong>Teachers:</strong> Estimated annual time savings of <strong>{teacher_time_saved:.1f} hours</strong> by reducing time spent on classroom disruptions, crisis management, and referrals.
-            </p>
-            <p>
-                <strong>Counselors:</strong> Estimated annual time savings of <strong>{counselor_time_saved:.1f} hours</strong> by decreasing involvement in disciplinary actions, crisis interventions, and processing referrals.
-            </p>
-            <p>
-                These reclaimed hours can be redirected towards proactive student support, planning, and fostering a positive educational environment.
-            </p>
+            <p><strong>Teachers:</strong> Estimated time saved <strong>per week:</strong> {teacher_time_saved_weekly:.1f} hours &nbsp; | &nbsp; <strong>per year:</strong> {teacher_time_saved_annual:.1f} hours</p>
+            <p><strong>Counselors:</strong> Estimated time saved <strong>per week:</strong> {counselor_time_saved_weekly:.1f} hours &nbsp; | &nbsp; <strong>per year:</strong> {counselor_time_saved_annual:.1f} hours</p>
+        </div>
+
+        <div class="chart-container" id="weekly-time-saved">
+            {weekly_chart_html}
+        </div>
+        <div class="chart-container" id="annual-time-saved">
+            {annual_chart_html}
         </div>
 
         <div class="footer">
@@ -244,8 +248,5 @@ def generate_report(results):
         </div>
     </body>
     </html>
-    \"\"\"
+    """
     return html_content
-
-updated_generate_report_code
-
