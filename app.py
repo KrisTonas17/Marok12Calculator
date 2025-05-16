@@ -182,7 +182,13 @@ if calculate_button:
     
     These reclaimed hours can be redirected to proactive student support, instructional planning, and fostering a healthy school climate.
     """)
-    
+
+    from visualizations import create_time_savings_charts
+
+    weekly_fig, annual_fig = create_time_savings_charts(teacher_time_saved, counselor_time_saved)
+    st.plotly_chart(weekly_fig, use_container_width=True)
+    st.plotly_chart(annual_fig, use_container_width=True)
+
     # Generate report button
 if st.session_state.get("report_ready"):
     st.subheader("Generate Your Report")
