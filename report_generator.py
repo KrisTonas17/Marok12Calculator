@@ -2,12 +2,13 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
-from utils import format_currency, create_summary_dataframe
+from utils import format_currency, create_summary_dataframe, calculate_time_saved
 from visualizations import create_savings_chart, create_roi_chart, create_time_savings_charts
 
 def generate_report(results):
     summary_df = create_summary_dataframe(results)
 
+    # Generate charts
     savings_chart = create_savings_chart(
         results["discipline_savings"],
         results["absenteeism_savings"],
@@ -15,31 +16,22 @@ def generate_report(results):
     )
     roi_chart = create_roi_chart(results)
 
-    # Calculate time savings
+    # Calculate time savings (weekly)
     num_students = results["num_students"]
     discipline_drop = results["discipline_drop"]
-    absenteeism_drop = results["absenteeism_drop"]
     crisis_drop = results["crisis_drop"]
+    time_savings = calculate_time_saved(num_students, discipline_drop, crisis_drop)
+    teacher_time_saved_weekly = time_savings["teacher"]
+    counselor_time_saved_weekly = time_savings["counselor"]
 
-    teacher_time_saved_weekly = (
-        num_students * discipline_drop * 0.25 +
-        num_students * crisis_drop * 0.33 +
-        num_students * absenteeism_drop * 0.25
-    )
-    counselor_time_saved_weekly = (
-        num_students * discipline_drop * 0.33 +
-        num_students * crisis_drop * 0.5 +
-        num_students * absenteeism_drop * 0.33
-    )
-
-    # Create time savings charts
+    # Generate time savings charts
     weekly_chart_fig, annual_chart_fig = create_time_savings_charts(
         teacher_time_saved_weekly, counselor_time_saved_weekly
     )
     weekly_chart = weekly_chart_fig.to_html(full_html=False, include_plotlyjs=False)
     annual_chart = annual_chart_fig.to_html(full_html=False, include_plotlyjs=False)
 
-    # Build HTML
+    # Build HTML report
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
