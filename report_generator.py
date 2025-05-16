@@ -8,7 +8,7 @@ from visualizations import create_savings_chart, create_roi_chart, create_time_s
 def generate_report(results):
     summary_df = create_summary_dataframe(results)
 
-    # Generate charts
+    # Create savings and ROI charts
     savings_chart = create_savings_chart(
         results["discipline_savings"],
         results["absenteeism_savings"],
@@ -16,22 +16,24 @@ def generate_report(results):
     )
     roi_chart = create_roi_chart(results)
 
-    # Calculate time savings (weekly)
+    # Time savings
     num_students = results["num_students"]
     discipline_drop = results["discipline_drop"]
     crisis_drop = results["crisis_drop"]
+    absenteeism_drop = results["absenteeism_drop"]
+
     time_savings = calculate_time_saved(num_students, discipline_drop, crisis_drop)
     teacher_time_saved_weekly = time_savings["teacher"]
     counselor_time_saved_weekly = time_savings["counselor"]
 
-    # Generate time savings charts
+    # Create time savings charts
     weekly_chart_fig, annual_chart_fig = create_time_savings_charts(
         teacher_time_saved_weekly, counselor_time_saved_weekly
     )
     weekly_chart = weekly_chart_fig.to_html(full_html=False, include_plotlyjs=False)
     annual_chart = annual_chart_fig.to_html(full_html=False, include_plotlyjs=False)
 
-    # Build HTML report
+    # Build HTML
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -43,7 +45,7 @@ def generate_report(results):
             body {{ font-family: Arial, sans-serif; padding: 20px; max-width: 900px; margin: auto; }}
             h1, h2, h3 {{ color: #1565C0; }}
             .summary-box {{ background-color: #f5f5f5; border-left: 5px solid #1565C0; padding: 15px; margin-bottom: 20px; }}
-            .chart-container {{ height: 360px; margin-bottom: 20px; }}
+            .chart-container {{ height: 340px; margin-bottom: 25px; }}
             .footer {{ font-size: 0.8em; text-align: center; color: #666; margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px; }}
         </style>
     </head>
