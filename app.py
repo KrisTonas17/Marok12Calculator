@@ -164,6 +164,32 @@ if calculate_button:
     )
     st.plotly_chart(compare_fig, use_container_width=True)
     
+    # Calculate team time savings
+    teacher_time_saved = (
+        num_students * discipline_drop * 0.25 +
+        num_students * crisis_drop * 0.33 +
+        num_students * absenteeism_drop * 0.25
+    )
+
+    counselor_time_saved = (
+        num_students * discipline_drop * 0.33 +
+        num_students * crisis_drop * 0.5 +
+        num_students * absenteeism_drop * 0.33
+    )
+
+# Display team time savings section
+    st.markdown("### 👥 Team Time Savings")
+    st.markdown("""
+    Beyond financial savings, implementing proactive mental health strategies can lead to meaningful **time savings** for your staff.
+    """)
+    st.markdown(f"""
+    - **Teachers** may save an estimated **{teacher_time_saved:.1f} hours annually** by reducing time spent on classroom disruptions, crisis management, and referrals.
+    - **Counselors** may save an estimated **{counselor_time_saved:.1f} hours annually** by decreasing time spent on disciplinary actions, crisis interventions, and processing referrals.
+
+    These reclaimed hours can be redirected to proactive student support, instructional planning, and fostering a healthy school climate.
+    """)
+
+    
     # Generate report button
 if st.session_state.get("report_ready"):
     st.subheader("Generate Your Report")
