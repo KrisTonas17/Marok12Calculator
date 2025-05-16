@@ -31,22 +31,19 @@ def generate_report(results):
     roi_chart = create_roi_chart(results)
 
     # Calculate time savings
-    num_students = results["num_students"]
-    discipline_drop = results["discipline_drop"]
-    absenteeism_drop = results["absenteeism_drop"]
-    crisis_drop = results["crisis_drop"]
+    from utils import calculate_time_saved
 
-    teacher_time_saved = (
-        num_students * discipline_drop * 0.25 +
-        num_students * crisis_drop * 0.33 +
-        num_students * absenteeism_drop * 0.25
+    time_saved = calculate_time_saved(
+        results["num_students"],
+        results["discipline_drop"],
+        results["crisis_drop"],
+        referral_drop=0.25  # or make this dynamic later
     )
+    
+    teacher_time_saved = time_saved["teacher"]
+    counselor_time_saved = time_saved["counselor"]
 
-    counselor_time_saved = (
-        num_students * discipline_drop * 0.33 +
-        num_students * crisis_drop * 0.5 +
-        num_students * absenteeism_drop * 0.33
-    )
+
 
     # Format the HTML content
     html_content = f"""
